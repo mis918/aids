@@ -159,7 +159,7 @@ export const AppToolbar: React.FC<AppToolbarProps> = ({
           aria-label={t('menu.github')}
           data-track="toolbar_click_github"
           onPointerUp={() => {
-            window.open('https://github.com/ljquan/aitu', '_blank');
+            window.open('https://check.sydney-ai.com', '_blank');
           }}
         />
       </div>
