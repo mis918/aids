@@ -78,11 +78,11 @@ export const SettingsDialog = ({
               <Tooltip
                 content={
                   <div>
-                    您可以从以下地址获取 API Key（新建令牌渠道分组选择default）:
+                    您可以从客服获取 API Key（suxiads）:
                     <br />
-                    <a href="https://api.tu-zi.com/token" target="_blank" rel="noopener noreferrer"
+                    <a href="http://ai.mis918.com" target="_blank" rel="noopener noreferrer"
                        style={{color: '#0052d9', textDecoration: 'none'}}>
-                      https://api.tu-zi.com/token
+                      http://ai.mis918.com
                     </a>
                   </div>
                 }
