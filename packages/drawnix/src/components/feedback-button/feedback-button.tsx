@@ -14,7 +14,7 @@ import { WeComIcon } from '../icons';
 import { ToolButton } from '../tool-button';
 import './feedback-button.scss';
 
-const QR_CODE_URL = 'https://tuziai.oss-cn-shenzhen.aliyuncs.com/aitu/AiTu.png';
+const QR_CODE_URL = 'https://s41.ax1x.com/2026/01/20/pZ676N8.png';
 
 // 企业微信图标组件
 const WeComIconComponent: React.FC = () => (
@@ -38,8 +38,8 @@ export const FeedbackButton: React.FC = () => {
         <ToolButton
           type="icon"
           icon={<WeComIconComponent />}
-          aria-label="用户反馈群"
-          title="用户反馈群"
+          aria-label="客服微信"
+          title="客服微信"
           tooltipPlacement="right"
           selected={open}
           visible={true}
@@ -54,7 +54,7 @@ export const FeedbackButton: React.FC = () => {
         <div className="feedback-qrcode-content">
           <img
             src={QR_CODE_URL}
-            alt="意见反馈二维码"
+            alt="客服微信"
             className="feedback-qrcode-image"
           />
           <div className="feedback-qrcode-text">扫码反馈意见</div>
