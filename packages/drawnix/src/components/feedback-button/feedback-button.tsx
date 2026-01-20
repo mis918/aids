@@ -14,7 +14,7 @@ import { WeComIcon } from '../icons';
 import { ToolButton } from '../tool-button';
 import './feedback-button.scss';
 
-const QR_CODE_URL = 'https://i.imgs.ovh/2026/01/20/yAvy6M.png';
+const QR_CODE_URL = 'https://i.imgs.ovh/2026/01/20/yAvy6M.th.png';
 
 // 企业微信图标组件
 const WeComIconComponent: React.FC = () => (
