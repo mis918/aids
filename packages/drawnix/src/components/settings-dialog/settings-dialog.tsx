@@ -78,11 +78,11 @@ export const SettingsDialog = ({
               <Tooltip
                 content={
                   <div>
-                    您可以从客服获取 API Key（suxiads）:
+                    您可以从下面地址查询 API Key 使用情况:
                     <br />
-                    <a href="http://ai.mis918.com" target="_blank" rel="noopener noreferrer"
+                    <a href="https://check.sydney-ai.com/" target="_blank" rel="noopener noreferrer"
                        style={{color: '#0052d9', textDecoration: 'none'}}>
-                      http://ai.mis918.com
+                      https://check.sydney-ai.com/
                     </a>
                   </div>
                 }
