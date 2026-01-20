@@ -229,7 +229,7 @@ export const GitHubLink = () => {
       icon={GithubIcon}
       data-track="toolbar_click_menu_github"
       onSelect={() => {
-        window.open('https://github.com/ljquan/aitu', '_blank');
+        window.open('https://check.sydney-ai.com', '_blank');
       }}
       aria-label={t('menu.github')}
     >
