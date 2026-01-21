@@ -5,74 +5,44 @@
  * Shows a QR code image on click for user feedback.
  */
 
-import React, { useRef, useState, useLayoutEffect } from 'react';
-import { createPortal } from 'react-dom';
+import React, { useState } from 'react';
 import { WeComIcon } from '../icons';
 import { ToolButton } from '../tool-button';
-import { Z_INDEX } from '../../constants/z-index';
-import './feedback-button.scss';
 
 const QR_CODE_URL = 'https://i.imgs.ovh/2026/01/20/yAvy6M.th.png';
 
-const WeComIconComponent: React.FC = () => (
-  <span className="feedback-button__icon">{WeComIcon}</span>
-);
-
 export const FeedbackButton: React.FC = () => {
-  const buttonRef = useRef<HTMLDivElement | null>(null);
   const [open, setOpen] = useState(false);
-  const [position, setPosition] = useState<{ top: number; left: number } | null>(null);
-
-  // ✅ 每次打开时，计算按钮在“视口中的真实位置”
-  useLayoutEffect(() => {
-    if (open && buttonRef.current) {
-      const rect = buttonRef.current.getBoundingClientRect();
-      setPosition({
-        top: rect.top + rect.height / 2,
-        left: rect.left
-      });
-    }
-  }, [open]);
 
   return (
     <>
-      <div ref={buttonRef}>
-        <ToolButton
-          type="icon"
-          icon={<WeComIconComponent />}
-          aria-label="客服微信"
-          title="客服微信"
-          selected={open}
-          onClick={() => setOpen(v => !v)}
-        />
-      </div>
+      <ToolButton
+        type="icon"
+        icon={<span>{WeComIcon}</span>}
+        title="客服微信"
+        onClick={() => setOpen(v => !v)}
+      />
 
-      {open && position &&
-        createPortal(
-          <div
-            className="feedback-qrcode-float"
-            style={{
-              position: 'fixed',
-              top: position.top,
-              left: position.left - 180,
-              transform: 'translateY(-50%)',
-              zIndex: Z_INDEX.POPOVER_FEEDBACK
-            }}
-          >
-            <div className="feedback-qrcode-content">
-              <img
-                src={QR_CODE_URL}
-                alt="客服微信"
-                className="feedback-qrcode-image"
-              />
-              <div className="feedback-qrcode-text">
-                扫码反馈意见
-              </div>
-            </div>
-          </div>,
-          document.body
-        )
-      }
+      {open && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 120,
+            right: 120,
+            padding: 12,
+            background: '#fff',
+            border: '1px solid #ccc',
+            zIndex: 999999
+          }}
+        >
+          <img
+            src={QR_CODE_URL}
+            alt="微信二维码"
+            style={{ width: 160, height: 160 }}
+          />
+          <div>扫码反馈意见</div>
+        </div>
+      )}
     </>
   );
 };
