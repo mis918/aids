@@ -6,7 +6,7 @@
  */
 
 import React, { useState } from 'react';
-import { PopoverTrigger } from '../popover/popover';
+import ReactDOM from 'react-dom';
 import { useBoard } from '@plait-board/react-board';
 import { PlaitBoard } from '@plait/core';
 import { Z_INDEX } from '../../constants/z-index';
@@ -27,45 +27,41 @@ export const FeedbackButton: React.FC = () => {
 
   return (
     <>
-      <PopoverTrigger asChild>
-        <ToolButton
-          type="icon"
-          icon={<WeComIconComponent />}
-          aria-label="客服微信"
-          title="客服微信"
-          selected={open}
-          onClick={() => setOpen((v) => !v)}
-        />
-      </PopoverTrigger>
+      <ToolButton
+        type="icon"
+        icon={<WeComIconComponent />}
+        aria-label="客服微信"
+        title="客服微信"
+        selected={open}
+        onClick={() => setOpen((v) => !v)}
+      />
 
-      {open && (
-        <div
-          className="feedback-qrcode-float"
-          style={{
-            position: 'absolute',
-            right: '48px',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            zIndex: Z_INDEX.POPOVER_FEEDBACK
-          }}
-          ref={(el) => {
-            if (el && container) {
-              container.appendChild(el);
-            }
-          }}
-        >
-          <div className="feedback-qrcode-content">
-            <img
-              src={QR_CODE_URL}
-              alt="客服微信"
-              className="feedback-qrcode-image"
-            />
-            <div className="feedback-qrcode-text">
-              扫码反馈意见
+      {open && container &&
+        ReactDOM.createPortal(
+          <div
+            className="feedback-qrcode-float"
+            style={{
+              position: 'absolute',
+              right: '48px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              zIndex: Z_INDEX.POPOVER_FEEDBACK
+            }}
+          >
+            <div className="feedback-qrcode-content">
+              <img
+                src={QR_CODE_URL}
+                alt="客服微信"
+                className="feedback-qrcode-image"
+              />
+              <div className="feedback-qrcode-text">
+                扫码反馈意见
+              </div>
             </div>
-          </div>
-        </div>
-      )}
+          </div>,
+          container
+        )
+      }
     </>
   );
 };
