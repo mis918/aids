@@ -6,7 +6,7 @@
  */
 
 import React, { useState } from 'react';
-import { Popover, PopoverContent, PopoverTrigger } from '../popover/popover';
+import { PopoverTrigger } from '../popover/popover';
 import { useBoard } from '@plait-board/react-board';
 import { PlaitBoard } from '@plait/core';
 import { Z_INDEX } from '../../constants/z-index';
@@ -26,30 +26,33 @@ export const FeedbackButton: React.FC = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <Popover
-      placement="right-end"
-      sideOffset={12}
-      open={open}
-      onOpenChange={setOpen}
-    >
+    <>
       <PopoverTrigger asChild>
         <ToolButton
           type="icon"
           icon={<WeComIconComponent />}
           aria-label="客服微信"
           title="客服微信"
-          tooltipPlacement="right"
           selected={open}
-          visible
+          onClick={() => setOpen((v) => !v)}
         />
       </PopoverTrigger>
 
-      {/* 💥 关键在这里：PopoverContent 强制重建 */}
       {open && (
-        <PopoverContent
-          key="feedback-popover"
-          container={container}
-          style={{ zIndex: Z_INDEX.POPOVER_FEEDBACK }}
+        <div
+          className="feedback-qrcode-float"
+          style={{
+            position: 'absolute',
+            right: '48px',
+            top: '50%',
+            transform: 'translateY(-50%)',
+            zIndex: Z_INDEX.POPOVER_FEEDBACK
+          }}
+          ref={(el) => {
+            if (el && container) {
+              container.appendChild(el);
+            }
+          }}
         >
           <div className="feedback-qrcode-content">
             <img
@@ -61,8 +64,8 @@ export const FeedbackButton: React.FC = () => {
               扫码反馈意见
             </div>
           </div>
-        </PopoverContent>
+        </div>
       )}
-    </Popover>
+    </>
   );
 };
