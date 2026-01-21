@@ -14,7 +14,8 @@ import { WeComIcon } from '../icons';
 import { ToolButton } from '../tool-button';
 import './feedback-button.scss';
 
-const QR_CODE_URL = 'https://ai.tianxi918.com/wechat-qrcode.png?v=${Date.now()}`';
+// 更新为上传的二维码图片地址
+const QR_CODE_URL = 'https://i.imgs.ovh/2026/01/20/yAvy6M.th.png';  // 使用上传的二维码图像
 
 // 企业微信图标组件
 const WeComIconComponent: React.FC = () => (
@@ -26,7 +27,7 @@ export const FeedbackButton: React.FC = () => {
   const container = PlaitBoard.getBoardContainer(board);
   const [open, setOpen] = useState(false);
 
-  // 预加载图片
+  // 预加载二维码图像
   useEffect(() => {
     const img = new Image();
     img.src = QR_CODE_URL;
@@ -52,14 +53,19 @@ export const FeedbackButton: React.FC = () => {
       </PopoverTrigger>
       <PopoverContent container={container} style={{ zIndex: Z_INDEX.POPOVER_FEEDBACK }}>
         <div className="feedback-qrcode-content">
-          <img
-            src={QR_CODE_URL}
-            alt="客服微信"
-            className="feedback-qrcode-image"
-          />
+          {/* 只在 Popover 打开时渲染二维码 */}
+          {open && (
+            <img
+              key={Date.now()} // 每次重新渲染，避免缓存问题
+              src={QR_CODE_URL}
+              alt="客服微信"
+              className="feedback-qrcode-image"
+            />
+          )}
           <div className="feedback-qrcode-text">扫码反馈意见</div>
         </div>
       </PopoverContent>
     </Popover>
   );
 };
+
