@@ -6,7 +6,7 @@
  */
 
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
+import { createPortal } from 'react-dom';
 import { useBoard } from '@plait-board/react-board';
 import { PlaitBoard } from '@plait/core';
 import { Z_INDEX } from '../../constants/z-index';
@@ -33,11 +33,11 @@ export const FeedbackButton: React.FC = () => {
         aria-label="客服微信"
         title="客服微信"
         selected={open}
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => setOpen(v => !v)}
       />
 
       {open && container &&
-        ReactDOM.createPortal(
+        createPortal(
           <div
             className="feedback-qrcode-float"
             style={{
