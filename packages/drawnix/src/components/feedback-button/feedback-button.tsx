@@ -5,44 +5,71 @@
  * Shows a QR code image on click for user feedback.
  */
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Popover, PopoverContent, PopoverTrigger } from '../popover/popover';
+import { useBoard } from '@plait-board/react-board';
+import { PlaitBoard } from '@plait/core';
+import { Z_INDEX } from '../../constants/z-index';
 import { WeComIcon } from '../icons';
 import { ToolButton } from '../tool-button';
+import './feedback-button.scss';
 
+// ⚠️ 必须是一个真实可访问的图片路径
 const QR_CODE_URL = 'https://i.imgs.ovh/2026/01/20/yAvy6M.th.png';
 
+// 企业微信图标组件
+const WeComIconComponent: React.FC = () => (
+  <span className="feedback-button__icon">{WeComIcon}</span>
+);
+
 export const FeedbackButton: React.FC = () => {
+  const board = useBoard();
+  const container = PlaitBoard.getBoardContainer(board);
   const [open, setOpen] = useState(false);
 
-  return (
-    <>
-      <ToolButton
-        type="icon"
-        icon={<span>{WeComIcon}</span>}
-        title="客服微信"
-        onClick={() => setOpen(v => !v)}
-      />
+  // 预加载图片（可以保留，不影响）
+  useEffect(() => {
+    const img = new Image();
+    img.src = QR_CODE_URL;
+  }, []);
 
-      {open && (
-        <div
-          style={{
-            position: 'fixed',
-            top: 120,
-            right: 120,
-            padding: 12,
-            background: '#fff',
-            border: '1px solid #ccc',
-            zIndex: 999999
-          }}
-        >
+  return (
+    <Popover
+      placement="right-end"
+      sideOffset={12}
+      open={open}
+      onOpenChange={setOpen}
+    >
+      <PopoverTrigger asChild>
+        <ToolButton
+          type="icon"
+          icon={<WeComIconComponent />}
+          aria-label="客服微信"
+          title="客服微信"
+          tooltipPlacement="right"
+          selected={open}
+          visible={true}
+          data-track="toolbar_click_feedback"
+          // ❌ 不要再写 onClick
+          // ❌ 不要再 stopPropagation
+        />
+      </PopoverTrigger>
+
+      <PopoverContent
+        container={container}
+        style={{ zIndex: Z_INDEX.POPOVER_FEEDBACK }}
+      >
+        <div className="feedback-qrcode-content">
           <img
             src={QR_CODE_URL}
-            alt="微信二维码"
-            style={{ width: 160, height: 160 }}
+            alt="客服微信"
+            className="feedback-qrcode-image"
           />
-          <div>扫码反馈意见</div>
+          <div className="feedback-qrcode-text">
+            扫码反馈意见
+          </div>
         </div>
-      )}
-    </>
+      </PopoverContent>
+    </Popover>
   );
 };
